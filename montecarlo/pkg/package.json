@@ -1,0 +1,15 @@
+{
+  "name": "montecarlo",
+  "collaborators": [
+    "Rickard Kjellin <rickard.kjellin@gmail.com>"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "montecarlo_bg.wasm",
+    "montecarlo.js",
+    "montecarlo.d.ts"
+  ],
+  "module": "montecarlo.js",
+  "types": "montecarlo.d.ts",
+  "sideEffects": "false"
+}
