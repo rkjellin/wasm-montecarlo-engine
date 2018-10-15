@@ -45,16 +45,21 @@ const worker = {
 
     output: {
         filename: 'workerbundle.js',
+        webassemblyModuleFilename: "[modulehash].wasm",
         path: path.join(__dirname, 'dist'),
     },
 
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.json'],
+        extensions: ['wasm', '.ts', '.tsx', '.js', '.json'],
         plugins: [],
     },
 
     module: {
         rules: [
+            {
+                test: /\.wasm$/,
+                type: "webassembly/experimental"
+            },
             {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',

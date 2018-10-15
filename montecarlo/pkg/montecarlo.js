@@ -1,5 +1,5 @@
 /* tslint:disable */
-import * as wasm from './montecarlo_bg';
+import * as wasm from './montecarlo_bg.wasm';
 
 let cachedTextDecoder = new TextDecoder('utf-8');
 
