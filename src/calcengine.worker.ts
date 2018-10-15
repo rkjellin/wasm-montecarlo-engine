@@ -1,7 +1,12 @@
-const ctx = self as never as Worker;
+import registerPromiseWorker from 'promise-worker/register';
+import { Request, EngineApi } from './protocol';
+
 import('montecarlo').then(module => {
-    ctx.postMessage({
-        hej: "bajs"
+    console.log("setting up worker")
+    registerPromiseWorker((message: Request) => {
+        console.log(`recieved request ${message.method}`);
+        if (message.method === EngineApi.RenderPath) {
+            return Array.of(module.render_path());
+        }
     });
-    console.log("hi from worker");
 });

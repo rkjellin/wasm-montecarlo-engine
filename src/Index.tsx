@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { CalcEngine } from './calcengine';
+
+const calcEngine = new CalcEngine();
+
+calcEngine.renderPath().then(path => console.log(`got path async: ${path}`));
 
 const Index: React.SFC = () => {
     return <div>hello</div>;
 };
-
-const worker = new Worker('./workerbundle.js')
-worker.addEventListener('message', function (evt) {
-    console.log("got response from worker! " + evt.data);
-});
 
 ReactDOM.render(<Index />, document.getElementById("app"));

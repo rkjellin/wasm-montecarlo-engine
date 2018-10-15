@@ -17,7 +17,12 @@ cfg_if! {
 }
 
 #[wasm_bindgen]
-extern {
+pub fn render_path() -> Vec<f64> {
+    vec![1.0, 1.3, 1.2, 1.1]
+}
+
+#[wasm_bindgen]
+extern "C" {
     fn alert(s: &str);
 }
 
