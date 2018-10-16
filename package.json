@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "homepage": "https://rkjellin.github.io/wasm-montocarlo-engine",
+  "scripts": {
+    "predeploy": "npx webpack --production",
+    "deploy": "npx gh-pages -d dist"
+  },
   "devDependencies": {
+    "gh-pages": "^2.0.1",
     "html-webpack-plugin": "^3.2.0",
     "ts-loader": "^5.2.2",
     "typescript": "^3.1.3",
