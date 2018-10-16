@@ -15,8 +15,10 @@
     "@types/react": "^16.4.16",
     "@types/react-dom": "^16.0.9",
     "montecarlo": "file:./montecarlo/pkg",
+    "plotly.js": "^1.41.3",
     "promise-worker": "^2.0.0",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react-dom": "^16.5.2",
+    "react-plotly.js": "^2.2.0"
   }
 }
