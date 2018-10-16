@@ -11,8 +11,6 @@ initial_value: number
 
  constructor(arg0: number, arg1: number, arg2: number);
 
- calc_incr(arg0: number, arg1: number): number;
-
- calc_path(arg0: number, arg1: number): Float64Array;
+ calc_paths(arg0: number, arg1: number, arg2: number): Float64Array;
 
 }

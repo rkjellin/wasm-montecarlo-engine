@@ -52,14 +52,13 @@ impl Process {
         }
     }
 
-    pub fn calc_incr(&self, initial_value: f64, dt: f64) -> f64 {
+    fn calc_incr(&self, initial_value: f64, dt: f64) -> f64 {
         let adj_drift = self.rate - 0.5 * self.vol * self.vol;
         let dw = thread_rng().sample(StandardNormal);
         initial_value * (f64::exp(adj_drift * dt + self.vol * dw))
     }
 
-    #[wasm_bindgen]
-    pub fn calc_path(&self, tau: f64, nbr_of_steps: i32) -> Vec<f64> {
+    fn calc_path(&self, tau: f64, nbr_of_steps: i32) -> Vec<f64> {
         let dt = tau / (nbr_of_steps as f64);
         let mut res = vec![0.0; nbr_of_steps as usize];
         let mut curr_value = self.initial_value;
@@ -69,5 +68,20 @@ impl Process {
             res[i as usize] = curr_value;
         }
         res
+    }
+
+    #[wasm_bindgen]
+    pub fn calc_paths(&self, tau: f64, nbr_of_steps: i32, nbr_of_paths: i32) -> Vec<f64> {
+        let mut paths = vec![];
+        for _i in 0..nbr_of_paths {
+            let path = self.calc_path(tau, nbr_of_steps);
+            paths.push(path);
+        }
+        let flattened: Vec<f64> = paths
+            .iter()
+            .flat_map(|array| array.iter())
+            .cloned()
+            .collect();
+        flattened
     }
 }

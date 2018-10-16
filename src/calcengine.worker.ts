@@ -1,23 +1,28 @@
 import registerPromiseWorker from 'promise-worker/register';
-import { Request, EngineApi } from './protocol';
+import { Request } from './protocol';
+import { flattenRawPaths } from './path-container';
 
-import('montecarlo').then(module => {
-    console.log("setting up worker")
-    registerPromiseWorker((message: Request) => {
-        console.log(`recieved request ${message.method}`);
-        if (message.method === EngineApi.RenderPath) {
-            const vol = 0.1;
-            const rate = 0.01;
-            const initialValue = 5.0;
+let mod: typeof import("montecarlo") | null = null;
 
-            const process = new module.Process(vol, rate, initialValue);
+registerPromiseWorker(async (req: Request) => {
+    console.log(`recieved request ${req.kind}`);
+    if (req.kind === 'engine-initialization') {
+        const module = await import('montecarlo');
+        mod = module;
+        return true;
+    }
+    else if (req.kind === 'pathrequest') {
+        const process = new mod!.Process(req.process.vol,
+            req.process.rate,
+            req.process.initialValue);
 
-            const tau = 1.0;
-            const nbrOfSteps = 100;
-            const res = Array.of(process.calc_path(tau, nbrOfSteps));
-            process.free();
-            return res;
-        }
-    });
+        const res = flattenRawPaths(process.calc_paths(req.tau,
+            req.nbrOfSteps,
+            req.nbrOfPaths),
+            req.nbrOfPaths,
+            req.nbrOfSteps);
+        process.free();
+        return res;
+    }
 });
 

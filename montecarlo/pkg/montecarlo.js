@@ -214,19 +214,12 @@ export class Process {
     /**
     * @param {number} arg0
     * @param {number} arg1
-    * @returns {number}
-    */
-    calc_incr(arg0, arg1) {
-        return wasm.process_calc_incr(this.ptr, arg0, arg1);
-    }
-    /**
-    * @param {number} arg0
-    * @param {number} arg1
+    * @param {number} arg2
     * @returns {Float64Array}
     */
-    calc_path(arg0, arg1) {
+    calc_paths(arg0, arg1, arg2) {
         const retptr = globalArgumentPtr();
-        wasm.process_calc_path(retptr, this.ptr, arg0, arg1);
+        wasm.process_calc_paths(retptr, this.ptr, arg0, arg1, arg2);
         const mem = getUint32Memory();
         const rustptr = mem[retptr / 4];
         const rustlen = mem[retptr / 4 + 1];
