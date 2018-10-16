@@ -3,6 +3,8 @@ import * as ReactDOM from 'react-dom';
 import { CalcEngine, createEngine } from './calcengine';
 import { PathRequest } from './protocol';
 import { PathContainer } from './path-container';
+import Plot from 'react-plotly.js';
+import { PlotData } from 'plotly.js';
 
 interface State {
     calcEngine: CalcEngine | undefined;
@@ -18,8 +20,8 @@ class App extends React.Component<{}, State> {
             calcEngine: undefined,
             req: {
                 kind: 'pathrequest',
-                nbrOfPaths: 10,
-                nbrOfSteps: 50,
+                nbrOfPaths: 100,
+                nbrOfSteps: 200,
                 tau: 1.0,
                 process: {
                     vol: 0.15,
@@ -47,8 +49,22 @@ class App extends React.Component<{}, State> {
     }
 
     render() {
+        let plot = undefined;
+        if (this.state.res !== undefined) {
+            let defs = this.state.res.map<Partial<PlotData>>(path => {
+                return {
+                    y: path,
+                    type: 'scatter',
+                    opacity: 0.2
+                };
+            })
+            plot = (<Plot
+                data={defs}
+                layout={{ width: 640, height: 480, title: 'Trajectories' }}></Plot>);
+        }
         return (<div>
             <div>Calculating: {this.state.isCalculating ? 'true' : 'false'}</div>
+            {plot}
         </div>);
     }
 }

@@ -93,10 +93,22 @@
     d3-collection "1"
     d3-interpolate "1"
 
+"@types/d3@^3":
+  version "3.5.41"
+  resolved "https://registry.yarnpkg.com/@types/d3/-/d3-3.5.41.tgz#57f08fc79b75f0fecb0b3547abc22e46e9d660e4"
+  integrity sha512-dInnr7nSPsofnLggOf70xvsInUjf3tRrE8XmxsioXALWQHkwEWi7RhTBCa9mYmiUDHMtuanSDN/JOW187ChIhw==
+
 "@types/node@*":
   version "10.11.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.7.tgz#0e75ca9357d646ca754016ca1d68a127ad7e7300"
   integrity sha512-yOxFfkN9xUFLyvWaeYj90mlqTJ41CsQzWKS3gXdOMOyPVacUsymejKxJ4/pMW7exouubuEeZLJawGgcNGYlTeg==
+
+"@types/plotly.js@*", "@types/plotly.js@^1.38.12":
+  version "1.38.12"
+  resolved "https://registry.yarnpkg.com/@types/plotly.js/-/plotly.js-1.38.12.tgz#7070a386c3a550de8bb61aa5083daad7afa18a36"
+  integrity sha512-24pwmHQDwXSSi6Edu4RxJxHx5r6Pl+CJ0hTcarL164IJCYKSp/sUmJa8k/1Vfz5z1fFSIBzqhUyprVPh+FN1DQ==
+  dependencies:
+    "@types/d3" "^3"
 
 "@types/prop-types@*":
   version "15.5.6"
@@ -109,6 +121,14 @@
   integrity sha512-4Z0bW+75zeQgsEg7RaNuS1k9MKhci7oQqZXxrV5KUGIyXZHHAAL3KA4rjhdH8o6foZ5xsRMSqkoM5A3yRVPR5w==
   dependencies:
     "@types/node" "*"
+    "@types/react" "*"
+
+"@types/react-plotly.js@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@types/react-plotly.js/-/react-plotly.js-2.2.2.tgz#b9d98c6b6085f4ee8267b31d18b9c3a5cfabbc1e"
+  integrity sha512-SaOu2FoaCVg//F0tGlPSNNh4PUceuHRy8oR4t4akSOOz6PfXurNGHuY4OLJ5dEQEh9pWjUttRuPVXI5eg9a8Cg==
+  dependencies:
+    "@types/plotly.js" "*"
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^16.4.16":
