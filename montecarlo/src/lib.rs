@@ -1,9 +1,12 @@
 extern crate cfg_if;
+extern crate rand;
 extern crate wasm_bindgen;
 
 mod utils;
 
 use cfg_if::cfg_if;
+use rand::distributions::{Normal, StandardNormal};
+use rand::prelude::*;
 use wasm_bindgen::prelude::*;
 
 cfg_if! {
@@ -29,4 +32,42 @@ extern "C" {
 #[wasm_bindgen]
 pub fn greet() {
     alert("Hello, montecarlo!");
+}
+
+#[wasm_bindgen]
+pub struct Process {
+    pub vol: f64,
+    pub rate: f64,
+    pub initial_value: f64,
+}
+
+#[wasm_bindgen]
+impl Process {
+    #[wasm_bindgen(constructor)]
+    pub fn new(vol: f64, rate: f64, initial_value: f64) -> Process {
+        Process {
+            vol: vol,
+            rate: rate,
+            initial_value: initial_value,
+        }
+    }
+
+    pub fn calc_incr(&self, initial_value: f64, dt: f64) -> f64 {
+        let adj_drift = self.rate - 0.5 * self.vol * self.vol;
+        let dw = thread_rng().sample(StandardNormal);
+        initial_value * (f64::exp(adj_drift * dt + self.vol * dw))
+    }
+
+    #[wasm_bindgen]
+    pub fn calc_path(&self, tau: f64, nbr_of_steps: i32) -> Vec<f64> {
+        let dt = tau / (nbr_of_steps as f64);
+        let mut res = vec![0.0; nbr_of_steps as usize];
+        let mut curr_value = self.initial_value;
+        res[0] = curr_value;
+        for i in 1..nbr_of_steps {
+            curr_value = self.calc_incr(curr_value, dt);
+            res[i as usize] = curr_value;
+        }
+        res
+    }
 }

@@ -6,7 +6,18 @@ import('montecarlo').then(module => {
     registerPromiseWorker((message: Request) => {
         console.log(`recieved request ${message.method}`);
         if (message.method === EngineApi.RenderPath) {
-            return Array.of(module.render_path());
+            const vol = 0.1;
+            const rate = 0.01;
+            const initialValue = 5.0;
+
+            const process = new module.Process(vol, rate, initialValue);
+
+            const tau = 1.0;
+            const nbrOfSteps = 100;
+            const res = Array.of(process.calc_path(tau, nbrOfSteps));
+            process.free();
+            return res;
         }
     });
 });
+
