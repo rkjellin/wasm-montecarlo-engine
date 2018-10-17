@@ -5,8 +5,10 @@
   "license": "MIT",
   "homepage": "https://rkjellin.github.io/wasm-montocarlo-engine",
   "scripts": {
-    "predeploy": "npx webpack --production",
-    "deploy": "npx gh-pages -d dist"
+    "predeploy": "webpack --production",
+    "deploy": "gh-pages -d dist",
+    "start": "webpack-dev-server --open",
+    "build": "webpack --production"
   },
   "devDependencies": {
     "gh-pages": "^2.0.1",
