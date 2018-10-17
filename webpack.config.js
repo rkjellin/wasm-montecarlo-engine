@@ -38,7 +38,7 @@ const app = {
 const worker = {
     target: 'webworker',
     entry: {
-        bundle: path.join(__dirname, './src/calcengine.worker.ts'),
+        bundle: path.join(__dirname, './src/engine/calcengine.worker.ts'),
     },
 
     mode: "development",
