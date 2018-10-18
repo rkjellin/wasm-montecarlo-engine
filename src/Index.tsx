@@ -5,6 +5,7 @@ import { Provider } from 'mobx-react';
 import { ParameterEditor } from './components/ParameterEditor';
 import { PlotArea } from './components/PlotArea';
 import { createEngine } from './engine/calcengine';
+import { PricingResultView } from './components/PricingResultView';
 
 class App extends React.Component<{ store: Store }, {}> {
     render() {
@@ -13,6 +14,7 @@ class App extends React.Component<{ store: Store }, {}> {
                 <div>
                     <ParameterEditor />
                     <PlotArea />
+                    <PricingResultView />
                 </div>
             </Provider>
         </div>);

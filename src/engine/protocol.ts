@@ -16,4 +16,13 @@ export interface PathRequest {
     nbrOfPaths: number;
 }
 
-export type Request = EngineInitializationRequest | PathRequest; 
+export interface PricingRequest {
+    kind: 'pricing-request';
+    process: ProcessParams;
+    tau: number;
+    nbrOfSteps: number;
+    nbrOfPaths: number;
+    payoffSrc: string;
+}
+
+export type Request = EngineInitializationRequest | PathRequest | PricingRequest; 

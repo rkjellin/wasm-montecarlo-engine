@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Store } from '../engine/store';
-import { PathRequest } from '../engine/protocol';
+import { PathRequest, PricingRequest } from '../engine/protocol';
 import styled from 'styled-components';
 
 const FormWrapper = styled.div`
@@ -171,20 +171,22 @@ export class ParameterEditor extends React.Component<Props, State> {
             !this.state.initialValue ||
             !this.state.vol ||
             !this.state.rate ||
-            !this.state.tau) {
+            !this.state.tau ||
+            !this.state.payoffDef) {
             return;
         }
-        const req: PathRequest = {
-            kind: "pathrequest",
-            nbrOfPaths: this.state.nbrOfSteps,
-            nbrOfSteps: this.state.nbrOfPaths,
+        const req: PricingRequest = {
+            kind: "pricing-request",
+            nbrOfPaths: this.state.nbrOfPaths,
+            nbrOfSteps: this.state.nbrOfSteps,
             tau: this.state.tau,
             process: {
                 initialValue: this.state.initialValue,
                 rate: this.state.rate,
                 vol: this.state.vol
-            }
+            },
+            payoffSrc: this.state.payoffDef
         };
-        this.props.store!.update(req);
+        this.props.store!.addPricingRequest(req);
     }
 }
