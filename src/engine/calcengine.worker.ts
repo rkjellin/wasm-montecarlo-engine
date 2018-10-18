@@ -44,6 +44,7 @@ registerPromiseWorker(async (req: Request) => {
         const pres: PricingResult = {
             estimatedPrice: avgPrice,
             rawPrices: prices,
+            paths: res,
         };
         return pres;
     }

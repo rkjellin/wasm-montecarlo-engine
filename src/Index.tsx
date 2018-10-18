@@ -6,6 +6,19 @@ import { ParameterEditor } from './components/ParameterEditor';
 import { PlotArea } from './components/PlotArea';
 import { createEngine } from './engine/calcengine';
 import { PricingResultView } from './components/PricingResultView';
+import styled from 'styled-components';
+
+const ResultWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
+const ResultBox = styled.div`
+    padding: 3px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid;
+`;
 
 class App extends React.Component<{ store: Store }, {}> {
     render() {
@@ -13,8 +26,14 @@ class App extends React.Component<{ store: Store }, {}> {
             <Provider store={this.props.store}>
                 <div>
                     <ParameterEditor />
-                    <PlotArea />
-                    <PricingResultView />
+                    <ResultWrapper>
+                        <ResultBox>
+                            <PlotArea />
+                        </ResultBox>
+                        <ResultBox>
+                            <PricingResultView />
+                        </ResultBox>
+                    </ResultWrapper>
                 </div>
             </Provider>
         </div>);

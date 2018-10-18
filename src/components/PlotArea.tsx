@@ -9,13 +9,6 @@ interface Props {
     store?: Store;
 }
 
-const PlotWrapper = styled.div`
-    margin: 5px;
-    padding: 5px;
-    border-radius: 10px;
-    border: 2px solid palevioletred;
-`;
-
 @inject("store")
 @observer
 export class PlotArea extends React.Component<Props> {
@@ -33,11 +26,9 @@ export class PlotArea extends React.Component<Props> {
             };
         })
         return (
-            <PlotWrapper>
-                <Plot
-                    data={defs}
-                    layout={{ width: 640, height: 480, title: 'Trajectories' }} />
-            </PlotWrapper>
+            <Plot
+                data={defs}
+                layout={{ width: 640, height: 480, title: 'Trajectories' }} />
         );
     }
 }

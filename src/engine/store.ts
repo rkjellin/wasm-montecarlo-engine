@@ -32,6 +32,7 @@ export class Store {
             this.isCalculating = false;
             this.estimatedPrice = result.estimatedPrice;
             this.rawPrices = result.rawPrices;
+            this.result = result.paths;
         });
     }
 }
