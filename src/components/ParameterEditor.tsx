@@ -2,6 +2,44 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Store } from '../engine/store';
 import { PathRequest } from '../engine/protocol';
+import styled from 'styled-components';
+
+const FormWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
+const InputWrapper = styled.div`
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    background-color: whitesmoke;
+`;
+
+const LabeledInput = styled.div`
+    padding: 3px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    label {
+        flex: 2;
+    }
+
+    input {
+        flex: 1;
+    }
+`;
+
+const InputGroupHeading = styled.h4`
+    margin: 5px;
+    color: darkred;
+`;
+
+const PayoffEditorWrapper = styled.textarea`
+    width: 400px;
+    height: 100px;
+`;
 
 interface Props {
     store?: Store;
@@ -14,7 +52,14 @@ interface State {
     vol?: number;
     rate?: number;
     initialValue?: number;
+    payoffDef?: string;
 }
+
+const payoffSrc =
+    `const K = 10;
+return Math.max(0, process[process.length - 1]);
+`;
+
 
 @inject("store")
 @observer
@@ -27,70 +72,93 @@ export class ParameterEditor extends React.Component<Props, State> {
             nbrOfSteps: 50,
             rate: 0.01,
             tau: 2.0,
-            vol: 0.15
+            vol: 0.15,
+            payoffDef: payoffSrc
         };
     }
     render() {
         return (
             <div>
                 <form>
-                    <div>
-                        <label>
-                            Tau:
-                    <input
-                                type="number"
-                                name="tau"
-                                value={this.state.tau}
-                                onChange={(evt) => this.setState({ tau: evt.target.valueAsNumber })} />
-                        </label>
+                    <FormWrapper>
+                        <InputWrapper>
+                            <InputGroupHeading>Simulation parameters</InputGroupHeading>
+                            <LabeledInput>
+                                <label>
+                                    Tau:
 
-                        <label>
-                            Number of Paths:
-                    <input
-                                type="number"
-                                name="paths"
-                                value={this.state.nbrOfPaths}
-                                onChange={(evt) => this.setState({ nbrOfPaths: evt.target.valueAsNumber })} />
-                        </label>
+                                </label>
+                                <input
+                                    type="number"
+                                    name="tau"
+                                    value={this.state.tau}
+                                    onChange={(evt) => this.setState({ tau: evt.target.valueAsNumber })} />
+                            </LabeledInput>
 
-                        <label>
-                            Number of Steps:
-                    <input
-                                type="number"
-                                name="steps"
-                                value={this.state.nbrOfSteps}
-                                onChange={(evt) => this.setState({ nbrOfSteps: evt.target.valueAsNumber })} />
-                        </label>
-                    </div>
+                            <LabeledInput>
+                                <label>
+                                    Number of Paths:
+                                </label>
+                                <input
+                                    type="number"
+                                    name="paths"
+                                    value={this.state.nbrOfPaths}
+                                    onChange={(evt) => this.setState({ nbrOfPaths: evt.target.valueAsNumber })} />
+                            </LabeledInput>
 
-                    <div>
-                        <label>
-                            Vol:
-                    <input
-                                type="number"
-                                name="vol"
-                                value={this.state.vol}
-                                onChange={(evt) => this.setState({ vol: evt.target.valueAsNumber })} />
-                        </label>
+                            <LabeledInput>
+                                <label>
+                                    Number of Steps:
+                                </label>
+                                <input
+                                    type="number"
+                                    name="steps"
+                                    value={this.state.nbrOfSteps}
+                                    onChange={(evt) => this.setState({ nbrOfSteps: evt.target.valueAsNumber })} />
+                            </LabeledInput>
+                        </InputWrapper>
 
-                        <label>
-                            Rate:
-                    <input
-                                type="number"
-                                name="rate"
-                                value={this.state.rate}
-                                onChange={(evt) => this.setState({ rate: evt.target.valueAsNumber })} />
-                        </label>
+                        <InputWrapper>
+                            <InputGroupHeading>Process parameters</InputGroupHeading>
+                            <LabeledInput>
+                                <label>
+                                    Vol:
+                                </label>
+                                <input
+                                    type="number"
+                                    name="vol"
+                                    value={this.state.vol}
+                                    onChange={(evt) => this.setState({ vol: evt.target.valueAsNumber })} />
+                            </LabeledInput>
+                            <LabeledInput>
+                                <label>
+                                    Rate:
+                                </label>
+                                <input
+                                    type="number"
+                                    name="rate"
+                                    value={this.state.rate}
+                                    onChange={(evt) => this.setState({ rate: evt.target.valueAsNumber })} />
+                            </LabeledInput>
 
-                        <label>
-                            Initial value:
-                    <input
-                                type="number"
-                                name="initial"
-                                value={this.state.initialValue}
-                                onChange={(evt) => this.setState({ initialValue: evt.target.valueAsNumber })} />
-                        </label>
-                    </div>
+                            <LabeledInput>
+                                <label>
+                                    Initial value:
+                                </label>
+                                <input
+                                    type="number"
+                                    name="initial"
+                                    value={this.state.initialValue}
+                                    onChange={(evt) => this.setState({ initialValue: evt.target.valueAsNumber })} />
+                            </LabeledInput>
+                        </InputWrapper>
+                        <InputWrapper>
+                            <InputGroupHeading>Payoff function</InputGroupHeading>
+                            <PayoffEditorWrapper
+                                value={this.state.payoffDef}
+                                onChange={(evt) => this.setState({ payoffDef: evt.target.value })} />
+                        </InputWrapper>
+                    </FormWrapper>
                 </form>
                 <button onClick={(evt) => this.handleClick()} >Calculate</button>
             </div >

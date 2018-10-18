@@ -3,10 +3,18 @@ import { inject, observer } from "mobx-react";
 import { Store } from "../engine/store";
 import Plot from "react-plotly.js";
 import { PlotData } from "plotly.js";
+import styled from 'styled-components';
 
 interface Props {
     store?: Store;
 }
+
+const PlotWrapper = styled.div`
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 2px solid palevioletred;
+`;
 
 @inject("store")
 @observer
@@ -25,9 +33,11 @@ export class PlotArea extends React.Component<Props> {
             };
         })
         return (
-            <Plot
-                data={defs}
-                layout={{ width: 640, height: 480, title: 'Trajectories' }} />
+            <PlotWrapper>
+                <Plot
+                    data={defs}
+                    layout={{ width: 640, height: 480, title: 'Trajectories' }} />
+            </PlotWrapper>
         );
     }
 }
