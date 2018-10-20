@@ -14,6 +14,7 @@ const ResultWrapper = styled.div`
 `;
 
 const ResultBox = styled.div`
+    flex: 1;
     padding: 3px;
     margin: 10px;
     border-radius: 5px;

@@ -69,7 +69,18 @@ export function greet() {
     return wasm.greet();
 }
 
+function _assertNum(n) {
+    if (typeof (n) !== 'number') throw new Error('expected a number argument');
+}
+
 const slab = [{ obj: undefined }, { obj: null }, { obj: true }, { obj: false }];
+
+export function assertSlabEmpty() {
+    for (let i = 4; i < slab.length; i++) {
+        if (typeof (slab[i]) === 'number') continue;
+        throw new Error('slab is not currently empty');
+    }
+}
 
 let slab_next = slab.length;
 
@@ -78,6 +89,7 @@ function addHeapObject(obj) {
     const idx = slab_next;
     const next = slab[idx];
 
+    if (typeof (next) !== 'number') throw new Error('corrupt slab');
     slab_next = next;
 
     slab[idx] = { obj, cnt: 1 };
@@ -95,12 +107,18 @@ const __wbg_call_ce9b4ee44f33326d_target = Function.prototype.call || function (
 
 const stack = [];
 
+export function assertStackEmpty() {
+    if (stack.length === 0) return;
+    throw new Error('stack is not currently empty');
+}
+
 function getObject(idx) {
     if ((idx & 1) === 1) {
         return stack[idx >> 1];
     } else {
         const val = slab[idx >> 1];
 
+        if (typeof (val) === 'number') throw new Error('corrupt slab');
         return val.obj;
 
     }
@@ -179,27 +197,48 @@ export class Process {
     * @returns {number}
     */
     get vol() {
+        if (this.ptr === 0) {
+            throw new Error('Attempt to use a moved value');
+        }
         return wasm.__wbg_get_process_vol(this.ptr);
     }
     set vol(arg0) {
+        if (this.ptr === 0) {
+            throw new Error('Attempt to use a moved value');
+        }
+        _assertNum(arg0);
         return wasm.__wbg_set_process_vol(this.ptr, arg0);
     }
     /**
     * @returns {number}
     */
     get rate() {
+        if (this.ptr === 0) {
+            throw new Error('Attempt to use a moved value');
+        }
         return wasm.__wbg_get_process_rate(this.ptr);
     }
     set rate(arg0) {
+        if (this.ptr === 0) {
+            throw new Error('Attempt to use a moved value');
+        }
+        _assertNum(arg0);
         return wasm.__wbg_set_process_rate(this.ptr, arg0);
     }
     /**
     * @returns {number}
     */
     get initial_value() {
+        if (this.ptr === 0) {
+            throw new Error('Attempt to use a moved value');
+        }
         return wasm.__wbg_get_process_initial_value(this.ptr);
     }
     set initial_value(arg0) {
+        if (this.ptr === 0) {
+            throw new Error('Attempt to use a moved value');
+        }
+        _assertNum(arg0);
         return wasm.__wbg_set_process_initial_value(this.ptr, arg0);
     }
     /**
@@ -209,6 +248,9 @@ export class Process {
     * @returns {}
     */
     constructor(arg0, arg1, arg2) {
+        _assertNum(arg0);
+        _assertNum(arg1);
+        _assertNum(arg2);
         this.ptr = wasm.process_new(arg0, arg1, arg2);
     }
     /**
@@ -218,6 +260,12 @@ export class Process {
     * @returns {Float64Array}
     */
     calc_paths(arg0, arg1, arg2) {
+        if (this.ptr === 0) {
+            throw new Error('Attempt to use a moved value');
+        }
+        _assertNum(arg0);
+        _assertNum(arg1);
+        _assertNum(arg2);
         const retptr = globalArgumentPtr();
         wasm.process_calc_paths(retptr, this.ptr, arg0, arg1, arg2);
         const mem = getUint32Memory();
@@ -233,10 +281,13 @@ export class Process {
 
 function dropRef(idx) {
 
+    if ((idx & 1) === 1) throw new Error('cannot drop ref of stack objects');
+
     idx = idx >> 1;
     if (idx < 4) return;
     let obj = slab[idx];
 
+    if (typeof (obj) === 'number') throw new Error('corrupt slab');
     obj.cnt -= 1;
     if (obj.cnt > 0) return;
 

@@ -22,7 +22,7 @@ export class PricingResultView extends React.Component<Props>{
         };
         const histogram = (
             <Plot
-                layout={{ width: 640, height: 480, title: 'Prices' }}
+                layout={{ autosize: true, title: 'Prices' }}
                 data={[datadef]} />
         );
 

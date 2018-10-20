@@ -40,7 +40,7 @@ export class PlotArea extends React.Component<Props, State> {
             })
             plot = <Plot
                 data={defs}
-                layout={{ width: 640, height: 480, title: 'Trajectories' }} />;
+                layout={{ autosize: true, title: 'Trajectories' }} />;
         }
         return (<div>
             <input
