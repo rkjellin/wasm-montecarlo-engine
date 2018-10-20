@@ -1,0 +1,88 @@
+Oct 20 21:07:24.273 ERRO Must specify at least one of `--node`, `--chrome`, `--firefox`, or `--safari`
+Oct 20 21:07:39.230 ERRO geckodriver binaries are unavailable for this target
+Oct 20 21:14:43.277 ERRO Compilation of your program failed. stderr:
+
+   Compiling montecarlo v0.1.0 (C:\Users\ricka\dev\option-pricer\montecarlo)
+error[E0658]: The attribute `wasm_bindgen_test` is currently unknown to the compiler and may have meaning added to it in the future (see issue #29642)
+  --> src\lib.rs:83:7
+   |
+83 |     #[wasm_bindgen_test]
+   |       ^^^^^^^^^^^^^^^^^
+   |
+   = help: add #![feature(custom_attribute)] to the crate attributes to enable
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0658`.
+error: Could not compile `montecarlo`.
+warning: build failed, waiting for other jobs to finish...
+error[E0658]: The attribute `wasm_bindgen_test` is currently unknown to the compiler and may have meaning added to it in the future (see issue #29642)
+  --> src\lib.rs:83:7
+   |
+83 |     #[wasm_bindgen_test]
+   |       ^^^^^^^^^^^^^^^^^
+   |
+   = help: add #![feature(custom_attribute)] to the crate attributes to enable
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0658`.
+error: Could not compile `montecarlo`.
+
+To learn more, run the command again with --verbose.
+
+Oct 20 21:16:02.317 ERRO Compilation of your program failed. stderr:
+
+   Compiling montecarlo v0.1.0 (C:\Users\ricka\dev\option-pricer\montecarlo)
+error[E0658]: The attribute `wasm_bindgen_test` is currently unknown to the compiler and may have meaning added to it in the future (see issue #29642)
+  --> src\lib.rs:83:7
+   |
+83 |     #[wasm_bindgen_test]
+   |       ^^^^^^^^^^^^^^^^^
+   |
+   = help: add #![feature(custom_attribute)] to the crate attributes to enable
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0658`.
+error: Could not compile `montecarlo`.
+warning: build failed, waiting for other jobs to finish...
+error[E0658]: The attribute `wasm_bindgen_test` is currently unknown to the compiler and may have meaning added to it in the future (see issue #29642)
+  --> src\lib.rs:83:7
+   |
+83 |     #[wasm_bindgen_test]
+   |       ^^^^^^^^^^^^^^^^^
+   |
+   = help: add #![feature(custom_attribute)] to the crate attributes to enable
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0658`.
+error: Could not compile `montecarlo`.
+
+To learn more, run the command again with --verbose.
+
+Oct 20 21:32:29.705 ERRO Compilation of your program failed. stderr:
+
+   Compiling montecarlo v0.1.0 (C:\Users\ricka\dev\option-pricer\montecarlo)
+error[E0425]: cannot find value `nbr_of_pts` in this scope
+  --> src\lib.rs:72:25
+   |
+72 |         let dt = tau / (nbr_of_pts as f64);
+   |                         ^^^^^^^^^^ did you mean `nbr_of_paths`?
+
+warning: unused import: `Normal`
+ --> src\lib.rs:8:27
+  |
+8 | use rand::distributions::{Normal, StandardNormal};
+  |                           ^^^^^^
+  |
+  = note: #[warn(unused_imports)] on by default
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0425`.
+error: Could not compile `montecarlo`.
+
+To learn more, run the command again with --verbose.
+

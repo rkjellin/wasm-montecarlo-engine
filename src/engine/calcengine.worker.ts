@@ -39,7 +39,7 @@ registerPromiseWorker(async (req: Request) => {
         const func = new Function("process", req.payoffSrc) as ((process: number[]) => number);
         const prices = res
             .map(func)
-            .map(fwdp => fwdp); // FIXME: discount to t=0
+            .map(fwdp => Math.exp(-req.process.rate * req.tau) * fwdp); // FIXME: discount to t=0
         const avgPrice = prices.reduce((p, c) => p + c, 0) / prices.length;
         const pres: PricingResult = {
             estimatedPrice: avgPrice,

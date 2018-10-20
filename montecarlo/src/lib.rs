@@ -58,11 +58,10 @@ impl Process {
         initial_value * (f64::exp(adj_drift * dt + self.vol * f64::sqrt(dt) * dw))
     }
 
-    fn calc_path_mut(&self, path_slice: &mut [f64], tau: f64, nbr_of_steps: i32) {
-        let dt = tau / (nbr_of_steps as f64);
+    fn calc_path_mut(&self, path_slice: &mut [f64], dt: f64, nbr_of_pts: i32) {
         let mut curr_value = self.initial_value;
         path_slice[0] = curr_value;
-        for i in 1..nbr_of_steps {
+        for i in 1..nbr_of_pts {
             curr_value = self.calc_incr(curr_value, dt);
             path_slice[i as usize] = curr_value;
         }
@@ -70,12 +69,21 @@ impl Process {
 
     #[wasm_bindgen]
     pub fn calc_paths(&self, tau: f64, nbr_of_steps: i32, nbr_of_paths: i32) -> Vec<f64> {
-        let mut paths: Vec<f64> = vec![0.0; (nbr_of_paths * nbr_of_steps) as usize];
+        let dt = tau / (nbr_of_steps as f64);
+        let nbr_of_pts = nbr_of_steps + 1; /* include starting point */
+        let mut paths: Vec<f64> = vec![0.0; (nbr_of_paths * nbr_of_pts) as usize];
         for _i in 0..nbr_of_paths {
-            let start_idx = (_i * nbr_of_steps) as usize;
-            let end_idx = start_idx + nbr_of_steps as usize;
-            self.calc_path_mut(&mut paths[start_idx..end_idx], tau, nbr_of_steps);
+            let start_idx = (_i * nbr_of_pts) as usize;
+            let end_idx = start_idx + nbr_of_pts as usize;
+            self.calc_path_mut(&mut paths[start_idx..end_idx], dt, nbr_of_pts);
         }
         paths
     }
+}
+
+#[test]
+fn test_calc_paths() {
+    let pr = Process::new(0.15, 0.01, 15.0);
+    let paths = pr.calc_paths(2.0, 1, 2000);
+    assert_eq!(paths.len(), 4000);
 }

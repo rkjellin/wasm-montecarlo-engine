@@ -10,8 +10,8 @@ export function flattenRawPaths(rawdata: Float64Array,
     // }
     const res: PathContainer = [];
     for (let i = 0; i < nbrOfPaths; i++) {
-        const startIdx = i * numberOfSteps;
-        const endIdx = startIdx + numberOfSteps;
+        const startIdx = i * (numberOfSteps + 1);
+        const endIdx = startIdx + numberOfSteps + 1;
         const path = Array.from(rawdata.slice(startIdx, endIdx));
         res.push(path);
     }
