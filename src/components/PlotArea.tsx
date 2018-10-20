@@ -9,26 +9,47 @@ interface Props {
     store?: Store;
 }
 
+interface State {
+    showPlot: boolean;
+}
+
 @inject("store")
 @observer
-export class PlotArea extends React.Component<Props> {
+export class PlotArea extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            showPlot: false
+        }
+    }
     render() {
         const store = this.props.store!;
-        if (!store.result) {
-            return <div>No data</div>;
+        let plot: JSX.Element | null = null;
+        if (!this.state.showPlot) {
+            plot = <div>Optional path plots</div>;
         }
-
-        let defs = store.result.map<Partial<PlotData>>(path => {
-            return {
-                y: path,
-                type: 'scatter',
-                opacity: 0.2
-            };
-        })
-        return (
-            <Plot
+        else if (!store.result) {
+            plot = <div>No data</div>;
+        } else {
+            let defs = store.result.map<Partial<PlotData>>(path => {
+                return {
+                    y: path,
+                    type: 'scatter',
+                    opacity: 0.2
+                };
+            })
+            plot = <Plot
                 data={defs}
-                layout={{ width: 640, height: 480, title: 'Trajectories' }} />
-        );
+                layout={{ width: 640, height: 480, title: 'Trajectories' }} />;
+        }
+        return (<div>
+            <input
+                type="checkbox"
+                checked={this.state.showPlot}
+                onChange={(evt) => {
+                    this.setState({ showPlot: evt.target.checked });
+                }} />
+            {plot}
+        </div>);
     }
 }

@@ -15,8 +15,9 @@ export class PricingResultView extends React.Component<Props>{
         const store = this.props.store!;
         if (!store.estimatedPrice || !store.rawPrices) { return <div>no price</div>; }
 
-        const datadef: Partial<PlotData> = {
+        const datadef: any = {
             type: 'histogram',
+            histnorm: 'probability',
             x: store.rawPrices,
         };
         const histogram = (
