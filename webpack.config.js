@@ -33,6 +33,7 @@ const app = {
         ],
     },
     plugins: [htmlPlugin],
+    devtool: 'inline-source-map'
 }
 
 const worker = {
@@ -66,6 +67,7 @@ const worker = {
             },
         ],
     },
+    devtool: 'inline-source-map',
 }
 
 module.exports = [app, worker];
