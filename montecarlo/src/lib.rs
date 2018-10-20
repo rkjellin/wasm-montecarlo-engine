@@ -46,42 +46,36 @@ impl Process {
     #[wasm_bindgen(constructor)]
     pub fn new(vol: f64, rate: f64, initial_value: f64) -> Process {
         Process {
-            vol: vol,
-            rate: rate,
-            initial_value: initial_value,
+            vol,
+            rate,
+            initial_value,
         }
     }
 
     fn calc_incr(&self, initial_value: f64, dt: f64) -> f64 {
         let adj_drift = self.rate - 0.5 * self.vol * self.vol;
         let dw = thread_rng().sample(StandardNormal);
-        initial_value * (f64::exp(adj_drift * dt + self.vol * dw))
+        initial_value * (f64::exp(adj_drift * dt + self.vol * f64::sqrt(dt) * dw))
     }
 
-    fn calc_path(&self, tau: f64, nbr_of_steps: i32) -> Vec<f64> {
+    fn calc_path_mut(&self, path_slice: &mut [f64], tau: f64, nbr_of_steps: i32) {
         let dt = tau / (nbr_of_steps as f64);
-        let mut res = vec![0.0; nbr_of_steps as usize];
         let mut curr_value = self.initial_value;
-        res[0] = curr_value;
+        path_slice[0] = curr_value;
         for i in 1..nbr_of_steps {
             curr_value = self.calc_incr(curr_value, dt);
-            res[i as usize] = curr_value;
+            path_slice[i as usize] = curr_value;
         }
-        res
     }
 
     #[wasm_bindgen]
     pub fn calc_paths(&self, tau: f64, nbr_of_steps: i32, nbr_of_paths: i32) -> Vec<f64> {
-        let mut paths = vec![];
+        let mut paths: Vec<f64> = vec![0.0; (nbr_of_paths * nbr_of_steps) as usize];
         for _i in 0..nbr_of_paths {
-            let path = self.calc_path(tau, nbr_of_steps);
-            paths.push(path);
+            let start_idx = (_i * nbr_of_steps) as usize;
+            let end_idx = start_idx + nbr_of_steps as usize;
+            self.calc_path_mut(&mut paths[start_idx..end_idx], tau, nbr_of_steps);
         }
-        let flattened: Vec<f64> = paths
-            .iter()
-            .flat_map(|array| array.iter())
-            .cloned()
-            .collect();
-        flattened
+        paths
     }
 }
