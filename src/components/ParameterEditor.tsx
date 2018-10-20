@@ -57,7 +57,7 @@ interface State {
 
 const payoffSrc =
     `const K = 10;
-return Math.max(0, process[process.length - 1]);
+return Math.max(0, process[process.length - 1] - K);
 `;
 
 
@@ -67,9 +67,9 @@ export class ParameterEditor extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            initialValue: 5.0,
+            initialValue: 15.0,
             nbrOfPaths: 20,
-            nbrOfSteps: 50,
+            nbrOfSteps: 20,
             rate: 0.01,
             tau: 2.0,
             vol: 0.15,
