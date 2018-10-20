@@ -35,14 +35,14 @@ export class PlotArea extends React.Component<Props, State> {
                 return {
                     y: path,
                     type: 'scatter',
-                    opacity: 0.2
+                    opacity: 0.2,
                 };
             })
             plot = <Plot
                 style={{ width: "100%", height: "100%" }}
                 useResizeHandler={true}
                 data={defs}
-                layout={{ autosize: true, title: 'Trajectories' }} />;
+                layout={{ showlegend: false, autosize: true, title: 'Trajectories' }} />;
         }
         return (<div>
             <input
