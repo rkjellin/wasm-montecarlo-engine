@@ -39,6 +39,8 @@ export class PlotArea extends React.Component<Props, State> {
                 };
             })
             plot = <Plot
+                style={{ width: "100%", height: "100%" }}
+                useResizeHandler={true}
                 data={defs}
                 layout={{ autosize: true, title: 'Trajectories' }} />;
         }

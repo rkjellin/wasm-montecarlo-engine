@@ -7,9 +7,11 @@ import styled from 'styled-components';
 const FormWrapper = styled.div`
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 `;
 
 const InputWrapper = styled.div`
+    flex: 1;
     margin: 5px;
     padding: 5px;
     display: flex;
@@ -24,6 +26,7 @@ const LabeledInput = styled.div`
     justify-content: flex-end;
     label {
         flex: 2;
+        flex-shrink: 0;
     }
 
     input {
@@ -37,7 +40,6 @@ const InputGroupHeading = styled.h4`
 `;
 
 const PayoffEditorWrapper = styled.textarea`
-    width: 400px;
     height: 100px;
 `;
 
@@ -81,12 +83,11 @@ export class ParameterEditor extends React.Component<Props, State> {
             <div>
                 <form>
                     <FormWrapper>
-                        <InputWrapper>
+                        <InputWrapper style={{ flexGrow: 2 }}>
                             <InputGroupHeading>Simulation parameters</InputGroupHeading>
                             <LabeledInput>
                                 <label>
                                     Tau:
-
                                 </label>
                                 <input
                                     type="number"
@@ -118,7 +119,7 @@ export class ParameterEditor extends React.Component<Props, State> {
                             </LabeledInput>
                         </InputWrapper>
 
-                        <InputWrapper>
+                        <InputWrapper style={{ flexGrow: 2 }} >
                             <InputGroupHeading>Process parameters</InputGroupHeading>
                             <LabeledInput>
                                 <label>
@@ -152,7 +153,7 @@ export class ParameterEditor extends React.Component<Props, State> {
                                     onChange={(evt) => this.setState({ initialValue: evt.target.valueAsNumber })} />
                             </LabeledInput>
                         </InputWrapper>
-                        <InputWrapper>
+                        <InputWrapper style={{ flexGrow: 3 }} >
                             <InputGroupHeading>Payoff function</InputGroupHeading>
                             <PayoffEditorWrapper
                                 value={this.state.payoffDef}

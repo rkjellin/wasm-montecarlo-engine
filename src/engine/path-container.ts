@@ -4,10 +4,7 @@ export type PathContainer = Path[];
 
 export function flattenRawPaths(rawdata: Float64Array,
     nbrOfPaths: number, numberOfSteps: number) {
-    console.assert(rawdata.length / nbrOfPaths === numberOfSteps, 'inconsistent input data');
-    // if (rawdata.length / nbrOfPaths === numberOfSteps) {
-    //     throw new Error('inconsistent input data');
-    // }
+    console.assert(rawdata.length / nbrOfPaths === numberOfSteps + 1, 'inconsistent input data');
     const res: PathContainer = [];
     for (let i = 0; i < nbrOfPaths; i++) {
         const startIdx = i * (numberOfSteps + 1);

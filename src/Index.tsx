@@ -11,31 +11,41 @@ import styled from 'styled-components';
 const ResultWrapper = styled.div`
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 `;
 
 const ResultBox = styled.div`
-    flex: 1;
+    flex: 1; 
+    flex-basis: 700;
     padding: 3px;
     margin: 10px;
-    border-radius: 5px;
+    border-radius: 3px;
     border: 1px solid;
+    width: 100%;
+    height: 100%;
+`;
+
+const AppContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
 `;
 
 class App extends React.Component<{ store: Store }, {}> {
     render() {
         return (<div>
             <Provider store={this.props.store}>
-                <div>
+                <AppContent>
                     <ParameterEditor />
                     <ResultWrapper>
                         <ResultBox>
-                            <PlotArea />
-                        </ResultBox>
-                        <ResultBox>
                             <PricingResultView />
                         </ResultBox>
+                        <ResultBox>
+                            <PlotArea />
+                        </ResultBox>
                     </ResultWrapper>
-                </div>
+                </AppContent>
             </Provider>
         </div>);
     }
