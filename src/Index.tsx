@@ -16,13 +16,12 @@ const ResultWrapper = styled.div`
 
 const ResultBox = styled.div`
     flex: 1; 
-    flex-basis: 700;
+    flex-basis: 45%;
+    flex-shrink: 0;
     padding: 3px;
     margin: 10px;
     border-radius: 3px;
     border: 1px solid;
-    width: 100%;
-    height: 100%;
 `;
 
 const AppContent = styled.div`
