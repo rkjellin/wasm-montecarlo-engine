@@ -1,8 +1,5 @@
 /* tslint:disable */
-export function render_path(): Float64Array;
-
-export function greet(): void;
-
+export enum DiscretizationScheme {Exact,EulerMaruyama,}
 export class Process {
 free(): void;
 vol: number
@@ -11,6 +8,6 @@ initial_value: number
 
  constructor(arg0: number, arg1: number, arg2: number);
 
- calc_paths(arg0: number, arg1: number, arg2: number): Float64Array;
+ calc_paths(arg0: number, arg1: number, arg2: number, arg3: number): Float64Array;
 
 }

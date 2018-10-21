@@ -1,6 +1,10 @@
 /* tslint:disable */
 import * as wasm from './montecarlo_bg.wasm';
 
+function _assertNum(n) {
+    if (typeof (n) !== 'number') throw new Error('expected a number argument');
+}
+
 let cachegetFloat64Memory = null;
 function getFloat64Memory() {
     if (cachegetFloat64Memory === null || cachegetFloat64Memory.buffer !== wasm.memory.buffer) {
@@ -29,20 +33,8 @@ function getUint32Memory() {
     return cachegetUint32Memory;
 }
 /**
-* @returns {Float64Array}
 */
-export function render_path() {
-    const retptr = globalArgumentPtr();
-    wasm.render_path(retptr);
-    const mem = getUint32Memory();
-    const rustptr = mem[retptr / 4];
-    const rustlen = mem[retptr / 4 + 1];
-
-    const realRet = getArrayF64FromWasm(rustptr, rustlen).slice();
-    wasm.__wbindgen_free(rustptr, rustlen * 8);
-    return realRet;
-
-}
+export const DiscretizationScheme = Object.freeze({ Exact: 0, EulerMaruyama: 1, });
 
 let cachedTextDecoder = new TextDecoder('utf-8');
 
@@ -56,21 +48,6 @@ function getUint8Memory() {
 
 function getStringFromWasm(ptr, len) {
     return cachedTextDecoder.decode(getUint8Memory().subarray(ptr, ptr + len));
-}
-
-export function __wbg_alert_fc3ac39541ae73f5(arg0, arg1) {
-    let varg0 = getStringFromWasm(arg0, arg1);
-    alert(varg0);
-}
-/**
-* @returns {void}
-*/
-export function greet() {
-    return wasm.greet();
-}
-
-function _assertNum(n) {
-    if (typeof (n) !== 'number') throw new Error('expected a number argument');
 }
 
 const slab = [{ obj: undefined }, { obj: null }, { obj: true }, { obj: false }];
@@ -257,17 +234,19 @@ export class Process {
     * @param {number} arg0
     * @param {number} arg1
     * @param {number} arg2
+    * @param {number} arg3
     * @returns {Float64Array}
     */
-    calc_paths(arg0, arg1, arg2) {
+    calc_paths(arg0, arg1, arg2, arg3) {
         if (this.ptr === 0) {
             throw new Error('Attempt to use a moved value');
         }
         _assertNum(arg0);
         _assertNum(arg1);
         _assertNum(arg2);
+        _assertNum(arg3);
         const retptr = globalArgumentPtr();
-        wasm.process_calc_paths(retptr, this.ptr, arg0, arg1, arg2);
+        wasm.process_calc_paths(retptr, this.ptr, arg0, arg1, arg2, arg3);
         const mem = getUint32Memory();
         const rustptr = mem[retptr / 4];
         const rustlen = mem[retptr / 4 + 1];

@@ -17,7 +17,8 @@ registerPromiseWorker(async (req: Request) => {
             req.process.rate,
             req.process.initialValue);
 
-        const res = flattenRawPaths(process.calc_paths(req.tau,
+        const res = flattenRawPaths(process.calc_paths(mod!.DiscretizationScheme.EulerMaruyama,
+            req.tau,
             req.nbrOfSteps,
             req.nbrOfPaths),
             req.nbrOfPaths,
@@ -30,7 +31,8 @@ registerPromiseWorker(async (req: Request) => {
             req.process.rate,
             req.process.initialValue);
 
-        const res = flattenRawPaths(process.calc_paths(req.tau,
+        const res = flattenRawPaths(process.calc_paths(mod!.DiscretizationScheme.EulerMaruyama,
+            req.tau,
             req.nbrOfSteps,
             req.nbrOfPaths),
             req.nbrOfPaths,

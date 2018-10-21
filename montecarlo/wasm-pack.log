@@ -86,3 +86,19 @@ error: Could not compile `montecarlo`.
 
 To learn more, run the command again with --verbose.
 
+Oct 21 15:18:15.239 ERRO Compilation of your program failed. stderr:
+
+   Compiling montecarlo v0.1.0 (C:\Users\ricka\dev\option-pricer\montecarlo)
+error[E0277]: the trait bound `DiscretizationScheme: wasm_bindgen::convert::RefFromWasmAbi` is not satisfied
+  --> src\lib.rs:29:1
+   |
+29 | #[wasm_bindgen]
+   | ^^^^^^^^^^^^^^^ the trait `wasm_bindgen::convert::RefFromWasmAbi` is not implemented for `DiscretizationScheme`
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0277`.
+error: Could not compile `montecarlo`.
+
+To learn more, run the command again with --verbose.
+
