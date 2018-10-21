@@ -5,3 +5,8 @@ export interface PricingResult {
     rawPrices: number[];
     paths: PathContainer;
 }
+
+export enum NamedDiscretizationScheme {
+    Exact = "Exact",
+    EulerMaruyama = "Euler-Maruyama"
+}

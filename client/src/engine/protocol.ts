@@ -1,3 +1,5 @@
+import { NamedDiscretizationScheme } from "./pricing";
+
 export interface EngineInitializationRequest {
     kind: 'engine-initialization';
 }
@@ -14,6 +16,7 @@ export interface PathRequest {
     tau: number;
     nbrOfSteps: number;
     nbrOfPaths: number;
+    scheme: NamedDiscretizationScheme;
 }
 
 export interface PricingRequest {
@@ -23,6 +26,7 @@ export interface PricingRequest {
     nbrOfSteps: number;
     nbrOfPaths: number;
     payoffSrc: string;
+    scheme: NamedDiscretizationScheme;
 }
 
 export type Request = EngineInitializationRequest | PathRequest | PricingRequest; 

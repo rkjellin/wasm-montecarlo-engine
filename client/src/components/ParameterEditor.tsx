@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { Store } from '../engine/store';
 import { PathRequest, PricingRequest } from '../engine/protocol';
 import styled from 'styled-components';
+import { NamedDiscretizationScheme } from '../engine/pricing';
 
 const FormWrapper = styled.div`
     display: flex;
@@ -55,6 +56,7 @@ interface State {
     rate?: number;
     initialValue?: number;
     payoffDef?: string;
+    scheme?: NamedDiscretizationScheme;
 }
 
 const payoffSrc =
@@ -75,10 +77,14 @@ export class ParameterEditor extends React.Component<Props, State> {
             rate: 0.01,
             tau: 2.0,
             vol: 0.15,
-            payoffDef: payoffSrc
+            payoffDef: payoffSrc,
+            scheme: NamedDiscretizationScheme.Exact
         };
     }
     render() {
+        const discretizationOptions = Object.values(NamedDiscretizationScheme).map(v => {
+            return <option key={v} value={v} >{v}</option>;
+        });
         return (
             <div>
                 <form>
@@ -116,6 +122,16 @@ export class ParameterEditor extends React.Component<Props, State> {
                                     name="steps"
                                     value={this.state.nbrOfSteps}
                                     onChange={(evt) => this.setState({ nbrOfSteps: evt.target.valueAsNumber })} />
+                            </LabeledInput>
+                            <LabeledInput>
+                                <label>
+                                    Discretization scheme:
+                                </label>
+                                <select
+                                    value={this.state.scheme}
+                                    onChange={(evt) => this.setState({ scheme: evt.target.value as NamedDiscretizationScheme })} >
+                                    {discretizationOptions}
+                                </select>
                             </LabeledInput>
                         </InputWrapper>
 
@@ -173,7 +189,8 @@ export class ParameterEditor extends React.Component<Props, State> {
             !this.state.vol ||
             !this.state.rate ||
             !this.state.tau ||
-            !this.state.payoffDef) {
+            !this.state.payoffDef ||
+            !this.state.scheme) {
             return;
         }
         const req: PricingRequest = {
@@ -186,7 +203,8 @@ export class ParameterEditor extends React.Component<Props, State> {
                 rate: this.state.rate,
                 vol: this.state.vol
             },
-            payoffSrc: this.state.payoffDef
+            payoffSrc: this.state.payoffDef,
+            scheme: this.state.scheme
         };
         this.props.store!.addPricingRequest(req);
     }
