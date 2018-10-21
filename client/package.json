@@ -27,7 +27,7 @@
     "@types/styled-components": "^4.0.1",
     "mobx": "^5.5.0",
     "mobx-react": "^5.3.1",
-    "montecarlo": "file:./montecarlo/pkg",
+    "montecarlo": "file:../montecarlo/pkg",
     "plotly.js": "^1.41.3",
     "promise-worker": "^2.0.0",
     "react": "^16.5.2",
